@@ -1,0 +1,56 @@
+# ----------------------------------------------------------------------------
+# Copyright (c) 2026, QIIME 2 development team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file LICENSE, distributed with this software.
+# ----------------------------------------------------------------------------
+import qiime2
+from qiime2.plugin.testing import TestPluginBase
+
+from q2_mag.semibin2.partition import collate_contig_maps
+
+
+class TestCollateContigMaps(TestPluginBase):
+    package = "q2_mag.semibin2.tests"
+
+    def test_collate_contig_maps(self):
+        contig_maps = [
+            {"mag1": ["contig1", "contig2"]},
+            {"mag2": ["contig3"], "mag3": ["contig4", "contig5"]},
+        ]
+
+        obs = collate_contig_maps(contig_maps)
+
+        exp = {
+            "mag1": ["contig1", "contig2"],
+            "mag2": ["contig3"],
+            "mag3": ["contig4", "contig5"],
+        }
+        self.assertDictEqual(exp, obs)
+
+    def test_collate_contig_maps_action(self):
+        from q2_mag.plugin_setup import plugin
+
+        contig_maps = [
+            qiime2.Artifact.import_data(
+                "FeatureMap[MAGtoContigs]",
+                {"mag1": ["contig1", "contig2"]},
+            ),
+            qiime2.Artifact.import_data(
+                "FeatureMap[MAGtoContigs]",
+                {"mag2": ["contig3"]},
+            ),
+        ]
+
+        (result,) = plugin.methods["collate_contig_maps"](
+            contig_maps=contig_maps
+        )
+
+        self.assertDictEqual(
+            {
+                "mag1": ["contig1", "contig2"],
+                "mag2": ["contig3"],
+            },
+            result.view(dict),
+        )
