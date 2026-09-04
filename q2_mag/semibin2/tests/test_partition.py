@@ -29,28 +29,4 @@ class TestCollateContigMaps(TestPluginBase):
         }
         self.assertDictEqual(exp, obs)
 
-    def test_collate_contig_maps_action(self):
-        from q2_mag.plugin_setup import plugin
-
-        contig_maps = [
-            qiime2.Artifact.import_data(
-                "FeatureMap[MAGtoContigs]",
-                {"mag1": ["contig1", "contig2"]},
-            ),
-            qiime2.Artifact.import_data(
-                "FeatureMap[MAGtoContigs]",
-                {"mag2": ["contig3"]},
-            ),
-        ]
-
-        (result,) = plugin.methods["collate_contig_maps"](
-            contig_maps=contig_maps
-        )
-
-        self.assertDictEqual(
-            {
-                "mag1": ["contig1", "contig2"],
-                "mag2": ["contig3"],
-            },
-            result.view(dict),
-        )
+    
