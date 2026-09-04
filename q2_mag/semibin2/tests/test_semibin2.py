@@ -141,9 +141,7 @@ class TestSemibin2(TestPluginBase):
     @patch("q2_mag.semibin2.semibin2.ContigSequencesDirFmt")
     @patch("q2_mag.semibin2.semibin2.MultiFASTADirectoryFormat")
     @patch("q2_mag.semibin2.semibin2._process_sample")
-    def test_bin_partition_contigs_semibin2(
-        self, p1, p2, _, filter_alignment_maps
-    ):
+    def test_bin_partition_contigs_semibin2(self, p1, p2, _, filter_alignment_maps):
         input_contigs = self.get_data_path("contigs")
         input_maps = self.get_data_path("maps")
         contigs = ContigSequencesDirFmt(input_contigs, mode="r")
@@ -240,9 +238,7 @@ class TestSemibin2(TestPluginBase):
         p2.return_value = mock_bins
 
         with self.assertRaisesRegex(ValueError, "No MAGs were formed"):
-            _bin_partition_contigs_semibin2(
-                contigs, maps, "single_easy_bin", args
-            )
+            _bin_partition_contigs_semibin2(contigs, maps, "single_easy_bin", args)
 
     @patch("q2_mag.semibin2.semibin2._bin_partition_contigs_semibin2")
     @patch("q2_mag.semibin2.semibin2._process_common_input_params")
@@ -271,9 +267,7 @@ class TestSemibin2(TestPluginBase):
         assert result == ("bins", {"contigA": "bin1"})
 
     def test_bin_contigs_semibin2_pipeline(self):
-        contigs = ContigSequencesDirFmt(
-            self.get_data_path("contigs"), mode="r"
-        )
+        contigs = ContigSequencesDirFmt(self.get_data_path("contigs"), mode="r")
         alignment_maps = BAMDirFmt(self.get_data_path("maps"), mode="r")
         partitions = MagicMock()
         partitions.values.return_value = ["partition1", "partition2"]
@@ -333,9 +327,7 @@ class TestSemibin2(TestPluginBase):
             bin_partition.call_args_list,
         )
         collate_mags.assert_called_once_with(["mags1", "mags2"])
-        collate_contig_maps.assert_called_once_with(
-            ["contig_map1", "contig_map2"]
-        )
+        collate_contig_maps.assert_called_once_with(["contig_map1", "contig_map2"])
         self.assertTupleEqual(("collated_mags", "collated_contig_map"), obs)
 
 

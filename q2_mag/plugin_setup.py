@@ -702,6 +702,8 @@ plugin.methods.register_function(
     ),
     citations=[
         citations["sieber2018recovery"],
+    ],
+)
 
 plugin.pipelines.register_function(
     function=q2_mag.semibin2.bin_contigs_semibin2,

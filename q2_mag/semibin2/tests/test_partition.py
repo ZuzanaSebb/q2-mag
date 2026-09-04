@@ -28,5 +28,3 @@ class TestCollateContigMaps(TestPluginBase):
             "mag3": ["contig4", "contig5"],
         }
         self.assertDictEqual(exp, obs)
-
-    
