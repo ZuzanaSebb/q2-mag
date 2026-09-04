@@ -5,7 +5,6 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
-import qiime2
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_mag.semibin2.partition import collate_contig_maps
