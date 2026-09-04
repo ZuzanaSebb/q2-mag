@@ -289,7 +289,7 @@ class TestSemibin2(TestPluginBase):
             ("mag", "collate_contig_maps"): collate_contig_maps,
         }
         ctx = MagicMock()
-        ctx.get_action.side_effect = actions.__getitem__
+        ctx.get_action.side_effect = lambda plugin, action: actions[(plugin, action)]
 
         obs = bin_contigs_semibin2(
             ctx=ctx,
