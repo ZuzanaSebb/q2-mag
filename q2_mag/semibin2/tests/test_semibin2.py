@@ -286,7 +286,7 @@ class TestSemibin2(TestPluginBase):
             ("types", "partition_contigs"): partition_contigs,
             ("mag", "_bin_contigs_semibin2"): bin_partition,
             ("types", "collate_sample_data_mags"): collate_mags,
-            ("mag", "collate_contig_maps"): collate_contig_maps,
+            ("types", "collate_contig_maps"): collate_contig_maps,
         }
         ctx = MagicMock()
         ctx.get_action.side_effect = lambda plugin, action: actions[(plugin, action)]

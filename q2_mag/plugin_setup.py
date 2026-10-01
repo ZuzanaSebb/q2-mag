@@ -54,6 +54,7 @@ from q2_types.reference_db import ReferenceDB
 from q2_types.genome_data import GenomeData, Proteins
 
 from q2_mag import __version__
+from q2_mag.semibin2._examples import bin_contigs_semibin2_example
 
 citations = Citations.load("citations.bib", package="q2_mag")
 
@@ -597,14 +598,6 @@ plugin.methods.register_function(
 #     citations=[citations["kutuzova2026improving"]],
 # )
 
-plugin.methods.register_function(
-    function=q2_mag.semibin2.collate_contig_maps,
-    inputs={"contig_maps": List[FeatureMap[MAGtoContigs]]},
-    parameters={},
-    outputs={"collated_contig_map": FeatureMap[MAGtoContigs]},
-    name="Collate contig maps.",
-    description="Collates contig maps.",
-)
 
 semibin2_params = {
     # "mode": Str % Choices("single", "multi"),
@@ -824,6 +817,7 @@ plugin.pipelines.register_function(
         citations["pan_deep_2022"],
         citations["pan_semibin2_2023"],
     ],
+    examples={"bin_contigs_semibin2": bin_contigs_semibin2_example},
 )
 
 plugin.register_semantic_types(BUSCOResults, BUSCO)

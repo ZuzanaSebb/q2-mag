@@ -5,11 +5,11 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
+from qiime2.plugin.testing import TestPluginBase
 
 
-def collate_contig_maps(contig_maps: dict) -> dict:
-    collated_contig_maps = {}
-    for contig_map in contig_maps:
-        collated_contig_maps.update(contig_map)
+class TestUsageExamples(TestPluginBase):
+    package = "q2_mag.tests"
 
-    return collated_contig_maps
+    def test_examples(self):
+        self.execute_examples()

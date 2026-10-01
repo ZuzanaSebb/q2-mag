@@ -12,6 +12,7 @@ import shutil
 import tempfile
 from uuid import uuid4
 
+from qiime2.util import duplicate
 from q2_types.per_sample_sequences import (
     BAMDirFmt,
     ContigSequencesDirFmt,
@@ -31,7 +32,10 @@ def _filter_alignment_maps(
 
     filtered_maps = BAMDirFmt()
     for sample in samples:
-        shutil.copy(maps_by_sample[f"{sample}_alignment"], filtered_maps.path)
+        src = maps_by_sample.get(f"{sample}_alignment")
+        if src is None:
+            continue
+        duplicate(src, os.path.join(str(filtered_maps.path), os.path.basename(src)))
 
     return filtered_maps
 
@@ -172,7 +176,7 @@ def bin_contigs_semibin2(
     partition_contigs = ctx.get_action("types", "partition_contigs")
     bin_partition = ctx.get_action("mag", "_bin_contigs_semibin2")
     collate_mags = ctx.get_action("types", "collate_sample_data_mags")
-    collate_contig_maps = ctx.get_action("mag", "collate_contig_maps")
+    collate_contig_maps = ctx.get_action("types", "collate_contig_maps")
 
     (partitioned_contigs,) = partition_contigs(contigs, num_partitions)
     mags = []
