@@ -197,11 +197,8 @@ def bin_contigs_semibin2(
         for contig_ids in collated_contig_map.view(dict).values()
         for contig in contig_ids
     }
-    if binned_ids:
-        (unbinned_contigs,) = filter_contigs(
-            contigs, on="contig", ids=sorted(binned_ids), exclude_ids=True
-        )
-    else:
-        unbinned_contigs = contigs
+    (unbinned_contigs,) = filter_contigs(
+        contigs, on="contig", ids=sorted(binned_ids), exclude_ids=True
+    )
 
     return collated_mags, collated_contig_map, unbinned_contigs
